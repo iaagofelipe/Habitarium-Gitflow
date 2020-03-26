@@ -1,14 +1,32 @@
-package entity;
+package main.java.entity;
 
+import javax.persistence.*;
 import java.util.Date;
 
+@Entity
+@Table(name = "rent")
 public class Rent {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
     private float value;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "entrance_date")
     private Date entranceDate;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "exit_date")
     private Date exitDate;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "readjustment_date")
     private Date readjustmentDate; //reajuste
+
     private int payDay;
+
+    @OneToOne
     private Property property;
 
     public long getId() {
