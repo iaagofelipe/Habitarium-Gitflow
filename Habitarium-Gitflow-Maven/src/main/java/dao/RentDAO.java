@@ -44,4 +44,17 @@ public class RentDAO implements DAO<Rent> {
       }
       return rent;
    }
+
+   @Override
+   public void delete(Rent object) {
+      try {
+         this.entityManager.getTransaction().begin();
+         this.entityManager.remove(object);
+         this.entityManager.getTransaction().commit();
+      } catch (Exception exception) {
+         this.entityManager.getTransaction().rollback();
+      } finally {
+         this.entityManager.close();
+      }
+   }
 }

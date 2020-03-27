@@ -45,4 +45,17 @@ public class LessorDAO implements DAO<Lessor> {
         }
         return lessor;
     }
+
+    @Override
+    public void delete(Lessor object) {
+        try {
+            this.entityManager.getTransaction().begin();
+            this.entityManager.remove(object);
+            this.entityManager.getTransaction().commit();
+        } catch (Exception exception) {
+            this.entityManager.getTransaction().rollback();
+        } finally {
+            this.entityManager.close();
+        }
+    }
 }

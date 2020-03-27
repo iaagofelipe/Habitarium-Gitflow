@@ -44,4 +44,17 @@ public class PropertyDAO implements DAO<Property> {
         }
         return property;
     }
+
+    @Override
+    public void delete(Property object) {
+        try {
+            this.entityManager.getTransaction().begin();
+            this.entityManager.remove(object);
+            this.entityManager.getTransaction().commit();
+        } catch (Exception exception) {
+            this.entityManager.getTransaction().rollback();
+        } finally {
+            this.entityManager.close();
+        }
+    }
 }
