@@ -1,6 +1,7 @@
 package main.java.dao;
 
 import main.java.connection.ConnectionFactory;
+import main.java.entity.Property;
 import main.java.entity.Rent;
 
 import javax.persistence.EntityManager;
@@ -60,5 +61,16 @@ public class RentDAO implements DAO<Rent> {
         } finally {
             this.entityManager.close();
         }
+    }
+
+    @Override
+    public Rent findById(Long id) {
+        Rent rent = null;
+        try{
+            rent = entityManager.find(Rent.class, id);
+        } catch (Exception e){
+            System.out.println("erro ao buscar por id\n" + e);
+        }
+        return rent;
     }
 }

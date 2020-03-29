@@ -62,4 +62,16 @@ public class LessorDAO implements DAO<Lessor> {
             this.entityManager.close();
         }
     }
+
+    @Override
+    public Lessor findById(Long id) {
+        Lessor lessor = null;
+        try{
+            lessor = entityManager.find(Lessor.class, id);
+        } catch (Exception e){
+            System.out.println("erro ao buscar por id\n" + e);
+        }
+        return lessor;
+    }
 }
+// TODO alterar mensagens de erro - estas estao aparecendo apenas no terminal para o programador ver
