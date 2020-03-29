@@ -13,10 +13,10 @@ public class LessorDAO implements DAO<Lessor> {
 
 
     @Override
-    public void save(Lessor object) {
+    public void save(Lessor lessor) {
         try {
             this.entityManager.getTransaction().begin();
-            this.entityManager.persist(object);
+            this.entityManager.persist(lessor);
             this.entityManager.getTransaction().commit();
         } catch (Exception error) {
             this.entityManager.getTransaction().rollback();
@@ -26,31 +26,35 @@ public class LessorDAO implements DAO<Lessor> {
     }
 
     @Override
-    public List<Lessor> get() {
+    public List<Lessor> getList() {
         Query query = this.entityManager.createQuery("SELECT l FROM Lessor as l");
         return query.getResultList();
     }
 
     @Override
-    public Lessor update(Lessor object) {
-        Lessor lessor = null;
+    public Lessor update(Lessor lessor) {
+        Lessor lessorUp = null;
         try {
             this.entityManager.getTransaction().begin();
-            lessor = this.entityManager.merge(object);
+            if (lessor.getId() == null) {
+                this.entityManager.persist(lessor);
+            } else {
+                lessorUp = this.entityManager.merge(lessor);
+            }
             this.entityManager.getTransaction().commit();
         } catch (Exception exception) {
             this.entityManager.getTransaction().rollback();
         } finally {
             this.entityManager.close();
         }
-        return lessor;
+        return lessorUp;
     }
 
     @Override
-    public void delete(Lessor object) {
+    public void delete(Lessor lessor) {
         try {
             this.entityManager.getTransaction().begin();
-            this.entityManager.remove(object);
+            this.entityManager.remove(lessor);
             this.entityManager.getTransaction().commit();
         } catch (Exception exception) {
             this.entityManager.getTransaction().rollback();

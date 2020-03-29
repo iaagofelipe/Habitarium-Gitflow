@@ -8,7 +8,7 @@ import java.util.Date;
 public class Rent {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
     private float value;
 
@@ -29,11 +29,11 @@ public class Rent {
     @OneToOne
     private Property property;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

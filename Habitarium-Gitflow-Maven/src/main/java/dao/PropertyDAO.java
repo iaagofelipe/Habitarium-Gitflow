@@ -12,10 +12,10 @@ public class PropertyDAO implements DAO<Property> {
     private EntityManager entityManager = new ConnectionFactory().getConnection();
 
     @Override
-    public void save(Property object) {
+    public void save(Property property) {
         try {
             this.entityManager.getTransaction().begin();
-            this.entityManager.persist(object);
+            this.entityManager.persist(property);
             this.entityManager.getTransaction().commit();
         } catch (Exception error) {
             this.entityManager.getTransaction().rollback();
@@ -25,31 +25,35 @@ public class PropertyDAO implements DAO<Property> {
     }
 
     @Override
-    public List get() {
+    public List getList() {
         Query query = this.entityManager.createQuery("SELECT p FROM Property as p");
         return query.getResultList();
     }
 
     @Override
-    public Property update(Property object) {
-        Property property = null;
+    public Property update(Property property) {
+        Property propertyUp = null;
         try {
             this.entityManager.getTransaction().begin();
-            property = this.entityManager.merge(object);
+            if (property.getId() == null) {
+                this.entityManager.persist(property);
+            } else {
+                propertyUp = this.entityManager.merge(property);
+            }
             this.entityManager.getTransaction().commit();
         } catch (Exception exception) {
             this.entityManager.getTransaction().rollback();
         } finally {
             this.entityManager.close();
         }
-        return property;
+        return propertyUp;
     }
 
     @Override
-    public void delete(Property object) {
+    public void delete(Property property) {
         try {
             this.entityManager.getTransaction().begin();
-            this.entityManager.remove(object);
+            this.entityManager.remove(property);
             this.entityManager.getTransaction().commit();
         } catch (Exception exception) {
             this.entityManager.getTransaction().rollback();
