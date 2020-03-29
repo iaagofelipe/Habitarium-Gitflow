@@ -1,7 +1,6 @@
 package main.java.dao;
 
 import main.java.connection.ConnectionFactory;
-import main.java.entity.Lessor;
 import main.java.entity.Property;
 
 import javax.persistence.EntityManager;
@@ -13,7 +12,7 @@ public class PropertyDAO implements DAO<Property> {
     private EntityManager entityManager = new ConnectionFactory().getConnection();
 
     @Override
-    public void save(Property property) {
+    public Property save(Property property) {
         try {
             this.entityManager.getTransaction().begin();
             this.entityManager.persist(property);
@@ -23,6 +22,7 @@ public class PropertyDAO implements DAO<Property> {
         } finally {
             this.entityManager.close();
         }
+        return property;
     }
 
     @Override
@@ -51,8 +51,10 @@ public class PropertyDAO implements DAO<Property> {
     }
 
     @Override
-    public void delete(Property property) {
+    public Property delete(Long id) {
+        Property property = null;
         try {
+            property = entityManager.find(Property.class, id);
             this.entityManager.getTransaction().begin();
             this.entityManager.remove(property);
             this.entityManager.getTransaction().commit();
@@ -61,14 +63,15 @@ public class PropertyDAO implements DAO<Property> {
         } finally {
             this.entityManager.close();
         }
+        return property;
     }
 
     @Override
     public Property findById(Long id) {
         Property property = null;
-        try{
+        try {
             property = entityManager.find(Property.class, id);
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println("erro ao buscar por id\n" + e);
         }
         return property;

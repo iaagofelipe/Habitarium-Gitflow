@@ -1,7 +1,6 @@
 package main.java.dao;
 
 import main.java.connection.ConnectionFactory;
-import main.java.entity.Property;
 import main.java.entity.Rent;
 
 import javax.persistence.EntityManager;
@@ -13,16 +12,17 @@ public class RentDAO implements DAO<Rent> {
     private EntityManager entityManager = new ConnectionFactory().getConnection();
 
     @Override
-    public void save(Rent object) {
+    public Rent save(Rent rent) {
         try {
             this.entityManager.getTransaction().begin();
-            this.entityManager.persist(object);
+            this.entityManager.persist(rent);
             this.entityManager.getTransaction().commit();
         } catch (Exception error) {
             this.entityManager.getTransaction().rollback();
         } finally {
             this.entityManager.close();
         }
+        return rent;
     }
 
     @Override
@@ -39,7 +39,7 @@ public class RentDAO implements DAO<Rent> {
             if (rent.getId() == null) {
                 this.entityManager.persist(rent);
             } else {
-               rentUp = this.entityManager.merge(rent);
+                rentUp = this.entityManager.merge(rent);
             }
             this.entityManager.getTransaction().commit();
         } catch (Exception exception) {
@@ -51,24 +51,27 @@ public class RentDAO implements DAO<Rent> {
     }
 
     @Override
-    public void delete(Rent object) {
+    public Rent delete(Long id) {
+        Rent rent = null;
         try {
+            rent = entityManager.find(Rent.class, id);
             this.entityManager.getTransaction().begin();
-            this.entityManager.remove(object);
+            this.entityManager.remove(rent);
             this.entityManager.getTransaction().commit();
         } catch (Exception exception) {
             this.entityManager.getTransaction().rollback();
         } finally {
             this.entityManager.close();
         }
+        return rent;
     }
 
     @Override
     public Rent findById(Long id) {
         Rent rent = null;
-        try{
+        try {
             rent = entityManager.find(Rent.class, id);
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println("erro ao buscar por id\n" + e);
         }
         return rent;

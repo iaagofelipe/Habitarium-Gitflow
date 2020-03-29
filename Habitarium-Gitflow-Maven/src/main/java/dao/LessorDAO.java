@@ -13,7 +13,7 @@ public class LessorDAO implements DAO<Lessor> {
 
 
     @Override
-    public void save(Lessor lessor) {
+    public Lessor save(Lessor lessor) {
         try {
             this.entityManager.getTransaction().begin();
             this.entityManager.persist(lessor);
@@ -23,6 +23,7 @@ public class LessorDAO implements DAO<Lessor> {
         } finally {
             this.entityManager.close();
         }
+        return lessor;
     }
 
     @Override
@@ -51,8 +52,10 @@ public class LessorDAO implements DAO<Lessor> {
     }
 
     @Override
-    public void delete(Lessor lessor) {
+    public Lessor delete(Long id) {
+        Lessor lessor = null;
         try {
+            lessor = entityManager.find(Lessor.class, id);
             this.entityManager.getTransaction().begin();
             this.entityManager.remove(lessor);
             this.entityManager.getTransaction().commit();
@@ -61,14 +64,15 @@ public class LessorDAO implements DAO<Lessor> {
         } finally {
             this.entityManager.close();
         }
+        return lessor;
     }
 
     @Override
     public Lessor findById(Long id) {
         Lessor lessor = null;
-        try{
+        try {
             lessor = entityManager.find(Lessor.class, id);
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println("erro ao buscar por id\n" + e);
         }
         return lessor;
