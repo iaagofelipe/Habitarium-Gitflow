@@ -12,9 +12,11 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
         <!-- entidade mapeada-->
+
+        <class>main.java.entity.Rent</class>
         <class>main.java.entity.Property</class>
         <class>main.java.entity.Lessor</class>
-        <class>main.java.entity.Rent</class>
+
 
         <properties>
             <!-- dados da conexao -->

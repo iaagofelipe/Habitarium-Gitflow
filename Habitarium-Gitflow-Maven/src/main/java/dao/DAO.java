@@ -3,8 +3,15 @@ package main.java.dao;
 import java.util.List;
 
 public interface DAO<T> {
-    void save(T object);
-    List get();
+
+    T save(T object);
+
+    List getList();
+
     T update(T object);
-    void delete(T object);
+
+    T delete(Long id);
+
+    T findById(Long id);
+
 }

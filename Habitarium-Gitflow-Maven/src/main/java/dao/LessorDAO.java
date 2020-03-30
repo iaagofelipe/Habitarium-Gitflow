@@ -13,30 +13,51 @@ public class LessorDAO implements DAO<Lessor> {
 
 
     @Override
-    public void save(Lessor object) {
+    public Lessor save(Lessor lessor) {
         try {
             this.entityManager.getTransaction().begin();
-            this.entityManager.persist(object);
+            this.entityManager.persist(lessor);
             this.entityManager.getTransaction().commit();
         } catch (Exception error) {
             this.entityManager.getTransaction().rollback();
         } finally {
             this.entityManager.close();
         }
+        return lessor;
     }
 
     @Override
-    public List<Lessor> get() {
+    public List<Lessor> getList() {
         Query query = this.entityManager.createQuery("SELECT l FROM Lessor as l");
         return query.getResultList();
     }
 
     @Override
-    public Lessor update(Lessor object) {
-        Lessor lessor = null;
+    public Lessor update(Lessor lessor) {
+        Lessor lessorUp = null;
         try {
             this.entityManager.getTransaction().begin();
-            lessor = this.entityManager.merge(object);
+            if (lessor.getId() == null) {
+                this.entityManager.persist(lessor);
+            } else {
+                lessorUp = this.entityManager.merge(lessor);
+            }
+            this.entityManager.getTransaction().commit();
+        } catch (Exception exception) {
+            this.entityManager.getTransaction().rollback();
+        } finally {
+            this.entityManager.close();
+        }
+        return lessorUp;
+    }
+
+    @Override
+    public Lessor delete(Long id) {
+        Lessor lessor = null;
+        try {
+            lessor = entityManager.find(Lessor.class, id);
+            this.entityManager.getTransaction().begin();
+            this.entityManager.remove(lessor);
             this.entityManager.getTransaction().commit();
         } catch (Exception exception) {
             this.entityManager.getTransaction().rollback();
@@ -47,15 +68,14 @@ public class LessorDAO implements DAO<Lessor> {
     }
 
     @Override
-    public void delete(Lessor object) {
+    public Lessor findById(Long id) {
+        Lessor lessor = null;
         try {
-            this.entityManager.getTransaction().begin();
-            this.entityManager.remove(object);
-            this.entityManager.getTransaction().commit();
-        } catch (Exception exception) {
-            this.entityManager.getTransaction().rollback();
-        } finally {
-            this.entityManager.close();
+            lessor = entityManager.find(Lessor.class, id);
+        } catch (Exception e) {
+            System.out.println("erro ao buscar por id\n" + e);
         }
+        return lessor;
     }
 }
+// TODO alterar mensagens de erro - estas estao aparecendo apenas no terminal para o programador ver
