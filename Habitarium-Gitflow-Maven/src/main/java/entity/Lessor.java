@@ -1,5 +1,7 @@
 package main.java.entity;
 
+import main.java.enuns.Gender;
+
 import javax.persistence.*;
 
 @Entity
