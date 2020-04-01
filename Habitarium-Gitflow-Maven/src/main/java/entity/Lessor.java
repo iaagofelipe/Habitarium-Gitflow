@@ -16,6 +16,8 @@ public class Lessor {
     private String cpf;
     private String telOne;
     private String telTwo;
+
+    @Enumerated(EnumType.ORDINAL)
     private Gender gender;
 
     @OneToOne
