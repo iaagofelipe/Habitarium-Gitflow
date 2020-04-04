@@ -26,7 +26,7 @@ public class Rent {
 
     private int payDay;
 
-    @OneToOne
+    @OneToOne (cascade = CascadeType.ALL, mappedBy = "rent")
     private Property property;
 
     public Long getId() {

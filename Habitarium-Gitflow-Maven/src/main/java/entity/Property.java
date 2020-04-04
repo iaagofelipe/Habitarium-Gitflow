@@ -15,7 +15,7 @@ public class Property {
     private String condo;
     private String blockCondo; //bloco do condominio
 
-    @OneToOne (cascade = CascadeType.ALL, mappedBy = "property")
+    @OneToOne
     private Rent rent;
 
     @OneToOne (cascade = CascadeType.ALL, mappedBy = "property")
