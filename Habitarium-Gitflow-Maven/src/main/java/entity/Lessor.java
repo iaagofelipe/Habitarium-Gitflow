@@ -21,14 +21,14 @@ public class Lessor {
     private Gender gender;
 
     @OneToOne
-    private Property property;
+    private Rent rent;
 
-    public Property getProperty() {
-        return property;
+    public Rent getRent() {
+        return rent;
     }
 
-    public void setProperty(Property property) {
-        this.property = property;
+    public void setRent(Rent rent) {
+        this.rent = rent;
     }
 
     public Long getId() {

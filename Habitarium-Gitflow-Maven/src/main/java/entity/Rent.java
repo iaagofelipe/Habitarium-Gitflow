@@ -26,8 +26,19 @@ public class Rent {
 
     private int payDay;
 
-    @OneToOne (cascade = CascadeType.ALL, mappedBy = "rent")
+    @OneToOne
     private Property property;
+
+    @OneToOne (cascade =  {CascadeType.REMOVE, CascadeType.PERSIST} , mappedBy = "rent")
+    private Lessor lessor;
+
+    public Lessor getLessor() {
+        return lessor;
+    }
+
+    public void setLessor(Lessor lessor) {
+        this.lessor = lessor;
+    }
 
     public Long getId() {
         return id;

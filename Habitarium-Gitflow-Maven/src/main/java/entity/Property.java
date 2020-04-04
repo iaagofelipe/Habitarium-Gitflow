@@ -15,19 +15,8 @@ public class Property {
     private String condo;
     private String blockCondo; //bloco do condominio
 
-    @OneToOne
-    private Rent rent;
-
     @OneToOne (cascade = CascadeType.ALL, mappedBy = "property")
-    private Lessor lessor;
-
-    public Lessor getLessor() {
-        return lessor;
-    }
-
-    public void setLessor(Lessor lessor) {
-        this.lessor = lessor;
-    }
+    private Rent rent;
 
     public Rent getRent() {
         return rent;
