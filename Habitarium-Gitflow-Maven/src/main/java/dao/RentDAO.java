@@ -1,6 +1,7 @@
 package main.java.dao;
 
 import main.java.connection.ConnectionFactory;
+import main.java.entity.Property;
 import main.java.entity.Rent;
 
 import javax.persistence.EntityManager;
@@ -55,6 +56,15 @@ public class RentDAO implements DAO<Rent> {
         Rent rent = null;
         try {
             rent = entityManager.find(Rent.class, id);
+
+            if (rent.getProperty() != null) {
+                PropertyDAO propertyDAO = new PropertyDAO();
+                Property property = propertyDAO.findById(rent.getProperty().getId());
+                property.setRent(null);
+                propertyDAO.update(property);
+            }
+            rent.setProperty(null);
+
             this.entityManager.getTransaction().begin();
             this.entityManager.remove(rent);
             this.entityManager.getTransaction().commit();
