@@ -56,9 +56,15 @@ public class LessorDAO implements DAO<Lessor> {
         Lessor lessor = null;
         try {
             lessor = entityManager.find(Lessor.class, id);
-            this.entityManager.getTransaction().begin();
-            this.entityManager.remove(lessor);
-            this.entityManager.getTransaction().commit();
+            if(lessor.getRent() == null){
+                this.entityManager.getTransaction().begin();
+                this.entityManager.remove(lessor);
+                this.entityManager.getTransaction().commit();
+            } else {
+                // TODO: Throw exception here!!
+                System.out.println("Nao eh possivel apagar um locatario vinculado a um aliguel");
+            }
+
         } catch (Exception exception) {
             this.entityManager.getTransaction().rollback();
         } finally {
@@ -73,6 +79,7 @@ public class LessorDAO implements DAO<Lessor> {
         try {
             lessor = entityManager.find(Lessor.class, id);
         } catch (Exception e) {
+            // TODO: Throw exception here!!
             System.out.println("erro ao buscar por id\n" + e);
         }
         return lessor;
