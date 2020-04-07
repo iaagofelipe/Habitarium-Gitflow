@@ -1,5 +1,6 @@
 package main.java.main;
 
+import main.java.dao.LessorDAO;
 import main.java.dao.PropertyDAO;
 import main.java.dao.RentDAO;
 import main.java.entity.Lessor;
@@ -10,8 +11,12 @@ import main.java.enuns.Gender;
 import java.util.Date;
 
 public class MainTestBD {
+
     public static void main(String[] args) {
-       // LEMBRAR DE ALTERAR OS ID
+
+        RentDAO rentDAO = new RentDAO();
+        rentDAO.delete(25L);
+
     }
 
     public static Rent createdRent() {
@@ -53,12 +58,17 @@ public class MainTestBD {
 //        propertyDAO.save(property);
 
 //        PASSO 2
-//        PropertyDAO propertyDAO = new PropertyDAO();
-//        Rent rent = createdRent();
 //        RentDAO rentDAO = new RentDAO();
+//        PropertyDAO propertyDAO = new PropertyDAO();
 //
-//        Property property = propertyDAO.findById(17L);
+//        Rent rent = createdRent();
+//        Property property = propertyDAO.findById(21L);
+//        Lessor lessor = createdLessor();
+//
+//        lessor.setRent(rent);
 //        rent.setProperty(property);
+//        rent.setLessor(lessor);
+//
 //        Rent rent1 = rentDAO.save(rent);
 //
 //        property.setRent(rent1);
