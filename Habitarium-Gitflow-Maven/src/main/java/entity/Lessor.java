@@ -11,6 +11,9 @@ public class Lessor {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @OneToOne
+    private Rent rent;
+
     private String name;
     private String rg;
     private String cpf;
@@ -19,17 +22,6 @@ public class Lessor {
 
     @Enumerated(EnumType.ORDINAL)
     private Gender gender;
-
-    @OneToOne
-    private Rent rent;
-
-    public Rent getRent() {
-        return rent;
-    }
-
-    public void setRent(Rent rent) {
-        this.rent = rent;
-    }
 
     public Long getId() {
         return id;
@@ -85,5 +77,13 @@ public class Lessor {
 
     public void setGender(Gender gender) {
         this.gender = gender;
+    }
+
+    public Rent getRent() {
+        return rent;
+    }
+
+    public void setRent(Rent rent) {
+        this.rent = rent;
     }
 }

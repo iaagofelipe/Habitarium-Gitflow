@@ -3,20 +3,21 @@ package main.java.entity;
 import javax.persistence.*;
 
 @Entity
-@Table (name = "property")
+@Table(name = "property")
 public class Property {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @OneToOne
+//    @Column(nullable = true)
+    private Rent rent;
 
     private String neighbour; //bairro
     private String street;
     private String propertyNumber;
     private String condo;
     private String blockCondo; //bloco do condominio
-
-    @OneToOne (cascade = CascadeType.ALL, mappedBy = "property")
-    private Rent rent;
 
     public Rent getRent() {
         return rent;

@@ -55,9 +55,15 @@ public class PropertyDAO implements DAO<Property> {
         Property property = null;
         try {
             property = entityManager.find(Property.class, id);
-            this.entityManager.getTransaction().begin();
-            this.entityManager.remove(property);
-            this.entityManager.getTransaction().commit();
+            if(property.getRent() == null){
+                this.entityManager.getTransaction().begin();
+                this.entityManager.remove(property);
+                this.entityManager.getTransaction().commit();
+            } else {
+                // TODO: Throw exception here!!
+                System.out.println("Nao eh possivel apagar uma propriedade vinculada a um aluguel");
+            }
+
         } catch (Exception exception) {
             this.entityManager.getTransaction().rollback();
         } finally {
@@ -72,6 +78,7 @@ public class PropertyDAO implements DAO<Property> {
         try {
             property = entityManager.find(Property.class, id);
         } catch (Exception e) {
+            // TODO: Throw exception here!!
             System.out.println("erro ao buscar por id\n" + e);
         }
         return property;

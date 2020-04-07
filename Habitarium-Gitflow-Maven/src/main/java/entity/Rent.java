@@ -10,35 +10,17 @@ public class Rent {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private float value;
-
-    @Temporal(TemporalType.DATE)
-    @Column(name = "entrance_date")
-    private Date entranceDate;
-
-    @Temporal(TemporalType.DATE)
-    @Column(name = "exit_date")
-    private Date exitDate;
-
-    @Temporal(TemporalType.DATE)
-    @Column(name = "readjustment_date")
-    private Date readjustmentDate; //reajuste
-
-    private int payDay;
-
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE, mappedBy = "rent")
     private Property property;
 
-    @OneToOne (cascade =  {CascadeType.REMOVE, CascadeType.PERSIST} , mappedBy = "rent")
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "rent")
     private Lessor lessor;
 
-    public Lessor getLessor() {
-        return lessor;
-    }
-
-    public void setLessor(Lessor lessor) {
-        this.lessor = lessor;
-    }
+    private float value;
+    private Date entranceDate;
+    private Date exitDate;
+    private Date readjustmentDate;
+    private int payDay;
 
     public Long getId() {
         return id;
@@ -56,6 +38,8 @@ public class Rent {
         this.value = value;
     }
 
+    @Temporal(TemporalType.DATE)
+    @Column(name = "entrance_date")
     public Date getEntranceDate() {
         return entranceDate;
     }
@@ -64,6 +48,8 @@ public class Rent {
         this.entranceDate = entranceDate;
     }
 
+    @Temporal(TemporalType.DATE)
+    @Column(name = "exit_date")
     public Date getExitDate() {
         return exitDate;
     }
@@ -72,6 +58,8 @@ public class Rent {
         this.exitDate = exitDate;
     }
 
+    @Temporal(TemporalType.DATE)
+    @Column(name = "readjustment_date")
     public Date getReadjustmentDate() {
         return readjustmentDate;
     }
@@ -94,5 +82,13 @@ public class Rent {
 
     public void setProperty(Property property) {
         this.property = property;
+    }
+
+    public Lessor getLessor() {
+        return lessor;
+    }
+
+    public void setLessor(Lessor lessor) {
+        this.lessor = lessor;
     }
 }
