@@ -60,6 +60,7 @@ public class PropertyDAO implements DAO<Property> {
                 this.entityManager.remove(property);
                 this.entityManager.getTransaction().commit();
             } else {
+                // TODO: Throw exception here!!
                 System.out.println("Nao eh possivel apagar uma propriedade vinculada a um aluguel");
             }
 
@@ -77,6 +78,7 @@ public class PropertyDAO implements DAO<Property> {
         try {
             property = entityManager.find(Property.class, id);
         } catch (Exception e) {
+            // TODO: Throw exception here!!
             System.out.println("erro ao buscar por id\n" + e);
         }
         return property;
