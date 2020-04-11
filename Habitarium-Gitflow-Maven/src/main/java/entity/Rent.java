@@ -2,6 +2,7 @@ package main.java.entity;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Map;
 
 @Entity
 @Table(name = "rent")
@@ -21,6 +22,9 @@ public class Rent {
     private Date exitDate;
     private Date readjustmentDate;
     private int payDay;
+
+    @ElementCollection
+    private Map<Date, Float> DatePaidAndValue;
 
     public Long getId() {
         return id;
@@ -90,5 +94,13 @@ public class Rent {
 
     public void setLessor(Lessor lessor) {
         this.lessor = lessor;
+    }
+
+    public Map<Date, Float> getDatePaidAndValue() {
+        return DatePaidAndValue;
+    }
+
+    public void setDatePaidAndValue(Map<Date, Float> datePaidAndValue) {
+        DatePaidAndValue = datePaidAndValue;
     }
 }
