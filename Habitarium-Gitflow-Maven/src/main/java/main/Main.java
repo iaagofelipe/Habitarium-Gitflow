@@ -42,10 +42,10 @@ public class Main {
 //
 //        PropertyDAO propertyDAO = new PropertyDAO();
 //        propertyDAO.save(property);
+//        System.out.println(propertyDAO.findById(27L).getId());
+//        propertyDAO.save(property);
 //          RentDAO rentDAO = new RentDAO();
 //          rentDAO.delete(5L);
-        LessorDAO lessorDAO = new LessorDAO();
-        lessorDAO.delete(15L);
 
     }
 }
