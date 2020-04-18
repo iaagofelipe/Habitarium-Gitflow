@@ -32,6 +32,12 @@ public class RentDAO implements DAO<Rent> {
         return query.getResultList();
     }
 
+    public List getListToBePaidToday(int today){
+        List query = this.entityManager.createQuery("SELECT r FROM Rent r WHERE r.payDay LIKE ?1").
+                setParameter(1, today).getResultList();
+        return query;
+    }
+
     @Override
     public Rent update(Rent rent) {
         Rent rentUp = null;
