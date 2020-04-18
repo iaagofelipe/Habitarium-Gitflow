@@ -22,6 +22,7 @@ public class Rent {
     private Date exitDate;
     private Date readjustmentDate;
     private int payDay;
+    private int amountPaidMonth = 0;
 
     @ElementCollection
     private Map<Date, Float> DatePaidAndValue;
@@ -102,5 +103,13 @@ public class Rent {
 
     public void setDatePaidAndValue(Map<Date, Float> datePaidAndValue) {
         DatePaidAndValue = datePaidAndValue;
+    }
+
+    public int getAmountPaidMonth() {
+        return amountPaidMonth;
+    }
+
+    public void setAmountPaidMonth(int amountPaidMonth) {
+        this.amountPaidMonth = amountPaidMonth;
     }
 }
