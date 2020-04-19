@@ -34,7 +34,7 @@ public class RentController {
             calendar.add(Calendar.MONTH, amountPaid);
             Date lastDatePaid = DataUtil.getDataMonthAndYear(calendar.getTime());
 
-            if (lastDatePaid.before(currentDate)) {
+            if (lastDatePaid.before(currentDate) || lastDatePaid.equals(currentDate)) {
                 rentListNotPaid.add(rent);
             }
         }
