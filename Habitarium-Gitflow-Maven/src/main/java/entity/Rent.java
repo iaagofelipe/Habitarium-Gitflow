@@ -25,7 +25,10 @@ public class Rent {
     private int amountPaidMonth = 0;
 
     @ElementCollection
-    private Map<Date, Float> DatePaidAndValue;
+    private Map<Date, Float> datePaidAndValue;
+
+    @ElementCollection
+    private Map<Date, Boolean> monthToBePaid;
 
     public Long getId() {
         return id;
@@ -98,11 +101,11 @@ public class Rent {
     }
 
     public Map<Date, Float> getDatePaidAndValue() {
-        return DatePaidAndValue;
+        return datePaidAndValue;
     }
 
-    public void setDatePaidAndValue(Map<Date, Float> datePaidAndValue) {
-        DatePaidAndValue = datePaidAndValue;
+    public void setDatePaidAndValue(Date date, Float value) {
+        this.datePaidAndValue.put(date, value);
     }
 
     public int getAmountPaidMonth() {
@@ -111,5 +114,12 @@ public class Rent {
 
     public void setAmountPaidMonth(int amountPaidMonth) {
         this.amountPaidMonth = amountPaidMonth;
+    }
+    public Map<Date, Boolean> getMonthToBePaid() {
+        return monthToBePaid;
+    }
+
+    public void setMonthToBePaid(Date date, Boolean paid) {
+        this.monthToBePaid.put(date, paid);
     }
 }
