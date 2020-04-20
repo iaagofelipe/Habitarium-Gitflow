@@ -86,4 +86,18 @@ public class Lessor {
     public void setRent(Rent rent) {
         this.rent = rent;
     }
+
+    @Override
+    public String toString() {
+        return "Lessor{\n" +
+                "id=" + id +
+                ", \nrentID=" + rent.getId() +
+                ", \nname='" + name + '\'' +
+                ", \nrg='" + rg + '\'' +
+                ", \ncpf='" + cpf + '\'' +
+                ", \ntelOne='" + telOne + '\'' +
+                ", \ntelTwo='" + telTwo + '\'' +
+                ", \ngender=" + gender +
+                '}';
+    }
 }

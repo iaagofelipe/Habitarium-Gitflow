@@ -112,4 +112,21 @@ public class Rent {
     public void setAmountPaidMonth(int amountPaidMonth) {
         this.amountPaidMonth = amountPaidMonth;
     }
+
+    @Override
+    public String toString() {
+        return "Rent{\n" +
+                "id=" + id +
+                ", \npropertyId=" + property.getId() +
+                ", \nlessorName=" + lessor.getName() +
+                ", \nlessorID=" + lessor.getId() +
+                ", \nvalue=" + value +
+                ", \nentranceDate=" + entranceDate +
+                ", \nexitDate=" + exitDate +
+                ", \nreadjustmentDate=" + readjustmentDate +
+                ", \npayDay=" + payDay +
+                ", \namountPaidMonth=" + amountPaidMonth +
+                ", \nDatePaidAndValue=" + DatePaidAndValue +
+                '}';
+    }
 }
