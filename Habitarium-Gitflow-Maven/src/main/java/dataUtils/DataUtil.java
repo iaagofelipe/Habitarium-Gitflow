@@ -1,5 +1,7 @@
 package main.java.dataUtils;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -13,5 +15,15 @@ public class DataUtil {
         myCalendar.set(Calendar.SECOND, 0);
         myCalendar.set(Calendar.MILLISECOND, 0);
         return myCalendar.getTime();
+    }
+
+    public static int getMonth(Date date) {
+        LocalDate ld = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        return ld.getMonthValue();
+    }
+
+    public static int getYear(Date date) {
+        LocalDate ld = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        return ld.getYear();
     }
 }
