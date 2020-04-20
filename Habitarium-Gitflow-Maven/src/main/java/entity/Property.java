@@ -74,4 +74,17 @@ public class Property {
     public void setBlockCondo(String blockCondo) {
         this.blockCondo = blockCondo;
     }
+
+    @Override
+    public String toString() {
+        return "Property{\n" +
+                "id=" + id +
+                ", \nrentID=" + rent.getId() +
+                ", \nneighbour='" + neighbour + '\'' +
+                ", \nstreet='" + street + '\'' +
+                ", \npropertyNumber='" + propertyNumber + '\'' +
+                ", \ncondo='" + condo + '\'' +
+                ", \nblockCondo='" + blockCondo + '\'' +
+                '}';
+    }
 }
