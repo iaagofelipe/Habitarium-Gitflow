@@ -2,6 +2,7 @@ package main.java.entity;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 @Entity
@@ -25,10 +26,10 @@ public class Rent {
     private int amountPaidMonth = 0;
 
     @ElementCollection
-    private Map<Date, Float> datePaidAndValue;
+    private Map<Date, Float> datePaidAndValue = new HashMap<>();
 
     @ElementCollection
-    private Map<Date, Boolean> monthToBePaid;
+    private Map<Date, Boolean> monthToBePaid = new HashMap<>();
 
     public Long getId() {
         return id;
