@@ -10,16 +10,20 @@ import java.util.*;
 public class RentController {
 
     public static void startRent(Rent rent) {
-        // @TODO: LOOP infinito resolver
-        Date entraceDate = rent.getEntranceDate();
-        while (entraceDate.before(rent.getExitDate())) {
+        Calendar entranceDate = Calendar.getInstance();
+        Calendar exitDate = Calendar.getInstance();
+        entranceDate.setTime(rent.getEntranceDate());
+        exitDate.setTime(rent.getExitDate());
+
+        while (entranceDate.before(exitDate)) {
             int payDay = rent.getPayDay();
-            int month = DataUtil.getMonth(entraceDate);
-            int year = DataUtil.getYear(entraceDate);
+            int month = DataUtil.getMonth(entranceDate);
+            int year = DataUtil.getYear(entranceDate);
 
             GregorianCalendar date = new GregorianCalendar(year, month - 1, payDay);
             System.out.println(date.getTime());
             rent.setMonthToBePaid(date.getTime(), false);
+            entranceDate.add(Calendar.MONTH, 1);
         }
     }
 
