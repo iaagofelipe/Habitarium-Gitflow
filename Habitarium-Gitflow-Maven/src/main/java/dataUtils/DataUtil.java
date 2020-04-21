@@ -17,12 +17,12 @@ public class DataUtil {
         return myCalendar.getTime();
     }
 
-    public static int getMonth(Date date) {
+    public static int getMonth(Calendar date) {
         LocalDate ld = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         return ld.getMonthValue();
     }
 
-    public static int getYear(Date date) {
+    public static int getYear(Calendar date) {
         LocalDate ld = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         return ld.getYear();
     }
