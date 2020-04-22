@@ -2,6 +2,7 @@ package main.java.entity;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 @Entity
@@ -16,6 +17,9 @@ public class Rent {
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "rent")
     private Lessor lessor;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "rent")
+    private List<MonthPaid> monthPaidList;
 
     private float value;
     private Date entranceDate;
@@ -111,6 +115,14 @@ public class Rent {
 
     public void setAmountPaidMonth(int amountPaidMonth) {
         this.amountPaidMonth = amountPaidMonth;
+    }
+
+    public List<MonthPaid> getMonthPaidList() {
+        return monthPaidList;
+    }
+
+    public void setMonthPaidList(List<MonthPaid> monthPaidList) {
+        this.monthPaidList = monthPaidList;
     }
 
     @Override
