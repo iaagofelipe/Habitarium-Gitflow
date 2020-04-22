@@ -18,6 +18,8 @@ public class Property {
     private String propertyNumber;
     private String condo;
     private String blockCondo; //bloco do condominio
+    private String city;
+    private String apartment;
 
     public Rent getRent() {
         return rent;
@@ -73,6 +75,22 @@ public class Property {
 
     public void setBlockCondo(String blockCondo) {
         this.blockCondo = blockCondo;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getApartment() {
+        return apartment;
+    }
+
+    public void setApartment(String apartment) {
+        this.apartment = apartment;
     }
 
     @Override
