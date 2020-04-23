@@ -29,8 +29,7 @@ public class MonthPaidDAO implements DAO<MonthPaid> {
 
     @Override
     public List getList() {
-        // TODO: retornar MonthPaid relacionado ao Rent??????
-        Query query = this.entityManager.createQuery("SELECT r FROM MonthPaid as r");
+        Query query = this.entityManager.createQuery("SELECT m FROM MonthPaid as m");
         return query.getResultList();
     }
 
