@@ -47,4 +47,14 @@ public class MonthPaid {
     public void setRent(Rent rent) {
         this.rent = rent;
     }
+
+    @Override
+    public String toString() {
+        return "MonthPaid{" +
+                "id=" + id +
+                ", date=" + date +
+                ", value=" + value +
+                ", rentId=" + rent.getId() +
+                '}';
+    }
 }
