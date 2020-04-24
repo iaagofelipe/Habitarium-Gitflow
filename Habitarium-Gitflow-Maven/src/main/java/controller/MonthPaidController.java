@@ -22,12 +22,12 @@ public class MonthPaidController {
         return false;
     }
 
-    public boolean isCurrentMonthLate(List<MonthPaid> months) {
+    public boolean isCurrentMonthLate(List<MonthPaid> months, int payDay) {
         Calendar currMonth = Calendar.getInstance();
         currMonth.setTime(new Date());
         if (!isCurrentMonthPaid(months)) {
             for (MonthPaid mp : months) {
-                if (mp.getRent().getPayDay() == currMonth.get(Calendar.DAY_OF_MONTH))
+                if (payDay == currMonth.get(Calendar.DAY_OF_MONTH))
                     return true;
             }
         }
