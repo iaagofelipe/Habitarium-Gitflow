@@ -9,7 +9,7 @@ import java.util.List;
 
 public class PropertyDAO implements DAO<Property> {
 
-    private EntityManager entityManager = new ConnectionFactory().getConnection();
+    private final EntityManager entityManager = new ConnectionFactory().getConnection();
 
     @Override
     public Property save(Property property) {
@@ -26,7 +26,7 @@ public class PropertyDAO implements DAO<Property> {
     }
 
     @Override
-    public List getList() {
+    public List<Property> getList() {
         Query query = this.entityManager.createQuery("SELECT p FROM Property as p");
         return query.getResultList();
     }
@@ -82,5 +82,10 @@ public class PropertyDAO implements DAO<Property> {
             System.out.println("erro ao buscar por id\n" + e);
         }
         return property;
+    }
+
+    public List<Property> getPropertyNotRented() {
+        Query query = this.entityManager.createQuery("SELECT p FROM Property as p WHERE p.rent.id = NULL");
+        return query.getResultList();
     }
 }
