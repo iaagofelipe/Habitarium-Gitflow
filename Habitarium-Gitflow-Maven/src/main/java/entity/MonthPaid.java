@@ -50,11 +50,16 @@ public class MonthPaid {
 
     @Override
     public String toString() {
-        return "MonthPaid{" +
+        String out = "MonthPaid{" +
                 "id=" + id +
                 ", date=" + date +
-                ", value=" + value +
-                ", rentId=" + rent.getId() +
-                '}';
+                ", value=" + value;
+        if (rent != null) {
+            out += ", rentId=" + rent.getId();
+        } else {
+            out += ", rentId= NULL";
+        }
+        out += '}';
+        return out;
     }
 }

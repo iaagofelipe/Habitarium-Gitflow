@@ -95,14 +95,19 @@ public class Property {
 
     @Override
     public String toString() {
-        return "Property{\n" +
+        String out = "Property{\n" +
                 "id=" + id +
-                ", \nrentID=" + rent.getId() +
                 ", \nneighbour='" + neighbour + '\'' +
                 ", \nstreet='" + street + '\'' +
                 ", \npropertyNumber='" + propertyNumber + '\'' +
                 ", \ncondo='" + condo + '\'' +
-                ", \nblockCondo='" + blockCondo + '\'' +
-                '}';
+                ", \nblockCondo='" + blockCondo + '\'';
+        if (rent != null) {
+            out += ", \nrentID=" + rent.getId();
+        } else {
+            out += ", \nrentID= NULL";
+        }
+        out +=  '}';
+        return out;
     }
 }

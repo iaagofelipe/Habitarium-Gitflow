@@ -89,15 +89,20 @@ public class Lessor {
 
     @Override
     public String toString() {
-        return "Lessor{\n" +
+        String out = "Lessor{\n" +
                 "id=" + id +
-                ", \nrentID=" + rent.getId() +
                 ", \nname='" + name + '\'' +
                 ", \nrg='" + rg + '\'' +
                 ", \ncpf='" + cpf + '\'' +
                 ", \ntelOne='" + telOne + '\'' +
                 ", \ntelTwo='" + telTwo + '\'' +
-                ", \ngender=" + gender +
-                '}';
+                ", \ngender=" + gender;
+        if (rent != null) {
+            out += ", \nrentID=" + rent.getId();
+        } else {
+            out += ", \nrentID= NULL";
+        }
+        out +=  '}';
+        return out;
     }
 }

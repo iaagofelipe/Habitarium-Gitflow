@@ -127,10 +127,8 @@ public class Rent {
 
     @Override
     public String toString() {
-        return "Rent{\n" +
+        String out = "Rent{\n" +
                 "id=" + id +
-                ", \npropertyId=" + property.getId() +
-                ", \nlessorName=" + lessor.getName() +
                 ", \nlessorID=" + lessor.getId() +
                 ", \nvalue=" + value +
                 ", \nentranceDate=" + entranceDate +
@@ -138,7 +136,13 @@ public class Rent {
                 ", \nreadjustmentDate=" + readjustmentDate +
                 ", \npayDay=" + payDay +
                 ", \namountPaidMonth=" + amountPaidMonth +
-                ", \nDatePaidAndValue=" + DatePaidAndValue +
-                '}';
+                ", \nDatePaidAndValue=" + DatePaidAndValue;
+        if (property != null && lessor != null) {
+            out += ", \npropertyId=" + property.getId() + ", \nlessorName=" + lessor.getName();
+        } else {
+            out += ", \npropertyId= NULL, \nlessorName= NULL";
+        }
+        out +=  '}';
+        return out;
     }
 }
