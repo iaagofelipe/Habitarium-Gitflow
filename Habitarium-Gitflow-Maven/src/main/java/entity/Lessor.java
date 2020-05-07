@@ -3,6 +3,7 @@ package main.java.entity;
 import main.java.enuns.Gender;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table (name = "lessor")
@@ -19,6 +20,10 @@ public class Lessor {
     private String cpf;
     private String telOne;
     private String telTwo;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "born_date")
+    private Date bornDate;
 
     @Enumerated(EnumType.ORDINAL)
     private Gender gender;
@@ -87,11 +92,20 @@ public class Lessor {
         this.rent = rent;
     }
 
+    public Date getBornDate() {
+        return bornDate;
+    }
+
+    public void setBornDate(Date bornDate) {
+        this.bornDate = bornDate;
+    }
+
     @Override
     public String toString() {
         String out = "Lessor{\n" +
                 "id=" + id +
                 ", \nname='" + name + '\'' +
+                ", \nbornDate='" + bornDate + '\'' +
                 ", \nrg='" + rg + '\'' +
                 ", \ncpf='" + cpf + '\'' +
                 ", \ntelOne='" + telOne + '\'' +
