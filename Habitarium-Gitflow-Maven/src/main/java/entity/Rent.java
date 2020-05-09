@@ -21,10 +21,19 @@ public class Rent {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "rent")
     private List<MonthPaid> monthPaidList;
 
-    private float value;
+    @Temporal(TemporalType.DATE)
+    @Column(name = "entrance_date")
     private Date entranceDate;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "exit_date")
     private Date exitDate;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "readjustment_date")
     private Date readjustmentDate;
+
+    private float value;
     private int payDay;
     private int amountPaidMonth = 0;
 
@@ -47,8 +56,6 @@ public class Rent {
         this.value = value;
     }
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "entrance_date")
     public Date getEntranceDate() {
         return entranceDate;
     }
@@ -57,8 +64,6 @@ public class Rent {
         this.entranceDate = entranceDate;
     }
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "exit_date")
     public Date getExitDate() {
         return exitDate;
     }
@@ -67,8 +72,6 @@ public class Rent {
         this.exitDate = exitDate;
     }
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "readjustment_date")
     public Date getReadjustmentDate() {
         return readjustmentDate;
     }
@@ -129,7 +132,6 @@ public class Rent {
     public String toString() {
         String out = "Rent{\n" +
                 "id=" + id +
-                ", \nlessorID=" + lessor.getId() +
                 ", \nvalue=" + value +
                 ", \nentranceDate=" + entranceDate +
                 ", \nexitDate=" + exitDate +
@@ -138,9 +140,9 @@ public class Rent {
                 ", \namountPaidMonth=" + amountPaidMonth +
                 ", \nDatePaidAndValue=" + DatePaidAndValue;
         if (property != null && lessor != null) {
-            out += ", \npropertyId=" + property.getId() + ", \nlessorName=" + lessor.getName();
+            out += ", \npropertyId=" + property.getId() + ", \nlessorID=" + lessor.getId();
         } else {
-            out += ", \npropertyId= NULL, \nlessorName= NULL";
+            out += ", \npropertyId= NULL, \nlessorId= NULL";
         }
         out +=  '}';
         return out;
