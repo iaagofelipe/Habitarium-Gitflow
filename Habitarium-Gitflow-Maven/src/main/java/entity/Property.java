@@ -96,13 +96,13 @@ public class Property {
     @Override
     public String toString() {
         String apartmentStr = condo + ", " + blockCondo + ", " + apartment;
-        String house = street + ", " + propertyNumber;
-        String condominium = condo + ", " + street + ", " + propertyNumber;
+        String houseStr = neighbour + ", " + street + ", " + "Nº " + propertyNumber;
+        String condominiumStr = condo + ", " + street + ", " + "Nº " + propertyNumber;
 
         if (condo.equals("") && blockCondo.equals("") && apartment.equals("")) {
-            return house;
+            return houseStr;
         } else if (apartment.equals("")) {
-            return condominium;
+            return condominiumStr;
         } else {
             return apartmentStr;
         }
