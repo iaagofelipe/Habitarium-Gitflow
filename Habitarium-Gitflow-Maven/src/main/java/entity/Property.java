@@ -95,9 +95,9 @@ public class Property {
 
     @Override
     public String toString() {
-        String apartmentStr = condo + ", " + blockCondo + ", " + apartment;
-        String houseStr = neighbour + ", " + street + ", " + "Nº " + propertyNumber;
-        String condominiumStr = condo + ", " + street + ", " + "Nº " + propertyNumber;
+        String apartmentStr = street + ", " + neighbour + ", " + condo + ", " + blockCondo + ", " + apartment;
+        String houseStr = street + ", " + neighbour + ", " + "Nº " + propertyNumber + ", " + city;
+        String condominiumStr = street + ", " + neighbour + ", " + condo + ", " + "Nº " + propertyNumber + ", " + city;
 
         if (condo.equals("") && blockCondo.equals("") && apartment.equals("")) {
             return houseStr;
