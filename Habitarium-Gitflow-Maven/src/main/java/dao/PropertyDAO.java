@@ -31,6 +31,12 @@ public class PropertyDAO implements DAO<Property> {
         return query.getResultList();
     }
 
+    public List getListToBePaidToday(String neighbour){
+        List query = this.entityManager.createQuery("SELECT r FROM Property r WHERE r.neighbour LIKE ?1").
+                setParameter(1, "%"+neighbour+"%").getResultList();
+        return query;
+    }
+
     @Override
     public Property update(Property property) {
         Property propertyUp = null;
