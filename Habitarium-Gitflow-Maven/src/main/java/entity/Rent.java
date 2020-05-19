@@ -130,21 +130,13 @@ public class Rent {
 
     @Override
     public String toString() {
-        String out = "Rent{\n" +
-                "id=" + id +
-                ", \nvalue=" + value +
-                ", \nentranceDate=" + entranceDate +
-                ", \nexitDate=" + exitDate +
-                ", \nreadjustmentDate=" + readjustmentDate +
-                ", \npayDay=" + payDay +
-                ", \namountPaidMonth=" + amountPaidMonth +
-                ", \nDatePaidAndValue=" + DatePaidAndValue;
-        if (property != null && lessor != null) {
-            out += ", \npropertyId=" + property.getId() + ", \nlessorID=" + lessor.getId();
-        } else {
-            out += ", \npropertyId= NULL, \nlessorId= NULL";
+        String out = "";
+
+        if (lessor != null && property != null) {
+            out += "Nome: " + this.getLessor().getName() + ", " + "Rua/Av:" + " " + this.getProperty().getStreet() +
+                    ", " + this.getProperty().getPropertyNumber() + ", ";
         }
-        out +=  '}';
+        out += "Valor: R$" + value + ", Vencimento: " + payDay;
         return out;
     }
 }
