@@ -130,13 +130,23 @@ public class Rent {
 
     @Override
     public String toString() {
-        String out = "";
+        StringBuilder sb = new StringBuilder();
 
         if (lessor != null && property != null) {
-            out += "Nome: " + this.getLessor().getName() + ", " + "Rua/Av:" + " " + this.getProperty().getStreet() +
-                    ", " + this.getProperty().getPropertyNumber() + ", ";
+            sb.append("Nome " + lessor.getName() + "  ");
+            sb.append("Valor R$: " + this.value + "  ");
+            sb.append("Vencimento: " + this.payDay + "  ");
+            sb.append("\n");
+            sb.append("Rua/Av: " + property.getStreet() + "  ");
+            sb.append("Nº: " + property.getPropertyNumber() + "  ");
+            sb.append("Bairro: " + property.getNeighbour() + "  ");
+            if(!property.getCondo().equals("")) sb.append("Cond: " + property.getCondo() + "  ");
+            if(!property.getBlockCondo().equals("")) sb.append("Blo: " + property.getBlockCondo() + "  ");
+            if(!property.getApartment().equals("")) sb.append("Apto: " + property.getApartment() + "");
+        } else {
+            sb.append("Aluguel incompleto: " +  this.id);
         }
-        out += "Valor: R$" + value + ", Vencimento: " + payDay;
-        return out;
+
+        return sb.toString();
     }
 }
