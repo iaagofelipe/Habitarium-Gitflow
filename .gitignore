@@ -24,6 +24,6 @@ hs_err_pid*
 
 .idea/
 
-Habitarium-Gitflow-Maven/target/
+Habitarium/target/
 
-Habitarium-Gitflow-Maven/Habitarium-Gitflow-Maven.iml
+Habitarium/Habitarium-Gitflow-Maven.iml
