@@ -1,6 +1,7 @@
 package main.java.entity;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
@@ -50,16 +51,7 @@ public class MonthPaid {
 
     @Override
     public String toString() {
-        String out = "MonthPaid{" +
-                "id=" + id +
-                ", date=" + date +
-                ", value=" + value;
-        if (rent != null) {
-            out += ", rentId=" + rent.getId();
-        } else {
-            out += ", rentId= NULL";
-        }
-        out += '}';
-        return out;
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        return "Data: " + format.format(date) + "\tValor: R$" + value;
     }
 }
