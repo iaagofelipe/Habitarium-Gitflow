@@ -75,4 +75,11 @@ public class UserDAO implements DAO<User> {
         }
         return user;
     }
+
+    public User findByLogin(String login){
+        User user = null;
+        user = (User) this.entityManager.createQuery("SELECT u FROM User u WHERE u.login LIKE ?1").
+                setParameter(1, login).getSingleResult();
+        return user;
+    }
 }
