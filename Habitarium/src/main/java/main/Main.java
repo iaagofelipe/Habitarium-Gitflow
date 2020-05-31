@@ -3,9 +3,11 @@ package main.java.main;
 import main.java.dao.LessorDAO;
 import main.java.dao.PropertyDAO;
 import main.java.dao.RentDAO;
+import main.java.dao.UserDAO;
 import main.java.entity.Lessor;
 import main.java.entity.Property;
 import main.java.entity.Rent;
+import main.java.entity.User;
 import main.java.enuns.Gender;
 
 import java.text.ParseException;
@@ -16,10 +18,19 @@ import java.util.Date;
 
 public class Main {
     public static void main(String[] args) throws ParseException {
-        createDB();
+//        createDB();
+        initUser();
     }
 
-    static void createDB() throws ParseException {
+    public static void initUser(){
+        UserDAO userDAO = new UserDAO();
+        User user = new User();
+        user.setLogin("admin");
+        user.setPassword("admin");
+        userDAO.save(user);
+    }
+
+    public static void createDB() throws ParseException {
         Property property = createProperty();
         saveToDB(property);
 
@@ -39,7 +50,7 @@ public class Main {
         saveToDB(p);
     }
 
-    static Property createProperty() {
+    public static Property createProperty() {
         Property property = new Property();
         property.setStreet("senador pompeu");
         property.setPropertyNumber("001");
@@ -51,7 +62,7 @@ public class Main {
         return property;
     }
 
-    static Lessor createLessor() {
+    public static Lessor createLessor() {
         Lessor lessor = new Lessor();
         lessor.setName("Victor");
         lessor.setRg("0019229012");
@@ -62,7 +73,7 @@ public class Main {
         return lessor;
     }
 
-    static Rent createRent() throws ParseException {
+    public static Rent createRent() throws ParseException {
         Rent rent = new Rent();
         rent.setValue(1000.0F);
         rent.setPayDay(10);
@@ -77,7 +88,7 @@ public class Main {
         return rent;
     }
 
-    static void saveToDB(Object obj) {
+    public static void saveToDB(Object obj) {
         if (obj instanceof Rent) {
             RentDAO dao = new RentDAO();
             dao.save((Rent) obj);
@@ -98,12 +109,12 @@ public class Main {
      *
      * @return The last property added to the DB
      */
-    static Property getLastProperty() {
+    public static Property getLastProperty() {
         PropertyDAO dao = new PropertyDAO();
         return Collections.max(dao.getList(), Comparator.comparing(Property::getId));
     }
 
-    static Rent getLastRent() {
+    public static Rent getLastRent() {
         RentDAO dao = new RentDAO();
         return Collections.max(dao.getList(), Comparator.comparing(Rent::getId));
     }
