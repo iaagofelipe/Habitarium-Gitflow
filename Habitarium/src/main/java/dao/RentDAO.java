@@ -88,7 +88,6 @@ public class RentDAO implements DAO<Rent> {
         try {
             rent = entityManager.find(Rent.class, id);
         } catch (Exception e) {
-            // TODO: Throw exception here!!
             System.out.println("erro ao buscar por id\n" + e);
         }
         return rent;
