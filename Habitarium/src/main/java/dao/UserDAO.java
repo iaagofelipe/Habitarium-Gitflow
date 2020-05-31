@@ -11,16 +11,21 @@ public class UserDAO implements DAO<User> {
 
     @Override
     public User save(User user) {
-        try {
-            this.entityManager.getTransaction().begin();
-            this.entityManager.persist(user);
-            this.entityManager.getTransaction().commit();
-        } catch (Exception error) {
-            this.entityManager.getTransaction().rollback();
-        } finally {
-            this.entityManager.close();
+        User userLocal = findByLogin(user.getLogin());
+        if (userLocal != null) {
+            try {
+                this.entityManager.getTransaction().begin();
+                this.entityManager.persist(user);
+                this.entityManager.getTransaction().commit();
+            } catch (Exception error) {
+                this.entityManager.getTransaction().rollback();
+            } finally {
+                this.entityManager.close();
+            }
+            return user;
+        } else {
+            return null;
         }
-        return user;
     }
 
     @Override
@@ -30,21 +35,26 @@ public class UserDAO implements DAO<User> {
 
     @Override
     public User update(User user) {
-        User userUp = null;
-        try {
-            this.entityManager.getTransaction().begin();
-            if (user.getId() == null) {
-                this.entityManager.persist(user);
-            } else {
-                userUp = this.entityManager.merge(user);
+        User userLocal = findByLogin(user.getLogin());
+        if (userLocal != null) {
+            User userUp = null;
+            try {
+                this.entityManager.getTransaction().begin();
+                if (user.getId() == null) {
+                    this.entityManager.persist(user);
+                } else {
+                    userUp = this.entityManager.merge(user);
+                }
+                this.entityManager.getTransaction().commit();
+            } catch (Exception exception) {
+                this.entityManager.getTransaction().rollback();
+            } finally {
+                this.entityManager.close();
             }
-            this.entityManager.getTransaction().commit();
-        } catch (Exception exception) {
-            this.entityManager.getTransaction().rollback();
-        } finally {
-            this.entityManager.close();
+            return userUp;
+        } else {
+            return null;
         }
-        return userUp;
     }
 
     @Override
@@ -76,7 +86,7 @@ public class UserDAO implements DAO<User> {
         return user;
     }
 
-    public User findByLogin(String login){
+    public User findByLogin(String login) {
         User user = null;
         user = (User) this.entityManager.createQuery("SELECT u FROM User u WHERE u.login LIKE ?1").
                 setParameter(1, login).getSingleResult();
