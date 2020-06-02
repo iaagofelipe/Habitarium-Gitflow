@@ -1,51 +1,42 @@
 package main.java.controller;
 
-import main.java.dao.RentDAO;
-import main.java.dataUtils.DataUtil;
+import main.java.entity.MonthPaid;
 import main.java.entity.Rent;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 public class RentController {
+    private Rent rent;
 
-    public static void makePayment(Date date, Float value, Rent rent) {
-        rent.getDatePaidAndValue().put(date, value);
+    public RentController(Rent rent) {
+        this.rent = rent;
     }
 
-    public static List<Rent> rentalsToBePaidToday() {
-        RentDAO rentDAO = new RentDAO();
-        return rentDAO.getListToBePaidToday(dayOfMonth());
-    }
-
-    public static List<Rent> checkIfYouPaid() {
-        RentDAO rentDAO = new RentDAO();
-        List<Rent> rentListDAO = rentDAO.getList();
-        Date currentDate = DataUtil.getDataMonthAndYear(new Date());
-
-        List<Rent> rentListNotPaid = new ArrayList<>();
-        for (Rent rent : rentListDAO) {
-            int amountPaid = rent.getAmountPaidMonth();
-            Date entrance = rent.getEntranceDate();
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(entrance);
-            calendar.add(Calendar.MONTH, amountPaid);
-            Date lastDatePaid = DataUtil.getDataMonthAndYear(calendar.getTime());
-
-            if (lastDatePaid.before(currentDate) || lastDatePaid.equals(currentDate)) {
-                rentListNotPaid.add(rent);
-            }
+    public List<MonthPaid> setMonthsToPay() {
+        if (rent.getEntranceDate() == null || rent.getExitDate() == null) {
+            throw new NullPointerException("Rent object has no entranceDate or exitDate attribute set!");
         }
-        return rentListNotPaid;
-    }
 
-    public static int dayOfMonth() {
-        Date today = new Date();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(today);
-        return calendar.get(Calendar.DAY_OF_MONTH);
-    }
+        List<MonthPaid> toPay = new ArrayList<>();
 
+        Calendar entranceDate = Calendar.getInstance();
+        Calendar exitDate = Calendar.getInstance();
+
+        entranceDate.setTime(rent.getEntranceDate());
+        exitDate.setTime(rent.getExitDate());
+
+        while (entranceDate.before(exitDate)) {
+            int payDay = rent.getPayDay();
+            int month = entranceDate.get(Calendar.MONTH);
+            int year = entranceDate.get(Calendar.YEAR);
+
+            GregorianCalendar date = new GregorianCalendar(year, month - 1, payDay);
+            toPay.add(new MonthPaid(date.getTime(), rent.getValue(), false, rent));
+            entranceDate.add(Calendar.MONTH, 1);
+        }
+        return toPay;
+    }
 }
