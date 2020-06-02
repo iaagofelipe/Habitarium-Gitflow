@@ -13,9 +13,19 @@ public class MonthPaid {
 
     private Date date;
     private float value;
+    private boolean isPaid;
 
     @ManyToOne
     private Rent rent;
+
+    public MonthPaid() {}
+
+    public MonthPaid(Date date, float value, boolean isPaid, Rent rent) {
+        this.date = date;
+        this.value = value;
+        this.rent = rent;
+        this.isPaid = isPaid;
+    }
 
     public Long getId() {
         return id;
@@ -49,9 +59,17 @@ public class MonthPaid {
         this.rent = rent;
     }
 
+    public boolean isPaid() {
+        return isPaid;
+    }
+
+    public void setPaid(boolean paid) {
+        isPaid = paid;
+    }
+
     @Override
     public String toString() {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        return "Data: " + format.format(date) + "\tValor: R$" + value;
+        return rent.getLessor().getName() + "  Data: " + format.format(date) + "  Valor: R$" + value;
     }
 }
