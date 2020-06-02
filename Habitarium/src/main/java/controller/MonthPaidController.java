@@ -2,35 +2,20 @@ package main.java.controller;
 
 import main.java.entity.MonthPaid;
 
-import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class MonthPaidController {
-
-    public boolean isCurrentMonthPaid(List<MonthPaid> months) {
-        Calendar currMonth = Calendar.getInstance();
-        Calendar targetMonth = Calendar.getInstance();
-        currMonth.setTime(new Date());
-        for (MonthPaid mp : months) {
-            targetMonth.setTime(mp.getDate());
-            if (currMonth.get(Calendar.MONTH) == targetMonth.get(Calendar.MONTH) &&
-                    currMonth.get(Calendar.YEAR) == targetMonth.get(Calendar.YEAR)) {
-                return true;
+    public List<MonthPaid> lateMonthsInRange(List<MonthPaid> monthPaids, Date start, Date finish) {
+        List<MonthPaid> out = new ArrayList<>();
+        for (MonthPaid monthPaid : monthPaids) {
+            Date month = monthPaid.getDate();
+            if (!monthPaid.isPaid() &&
+                    (month.compareTo(start) >= 0 && month.compareTo(finish) <= 0)) {
+                out.add(monthPaid);
             }
         }
-        return false;
-    }
-
-    public boolean isCurrentMonthLate(List<MonthPaid> months, int payDay) {
-        Calendar currMonth = Calendar.getInstance();
-        currMonth.setTime(new Date());
-        if (!isCurrentMonthPaid(months)) {
-            for (MonthPaid mp : months) {
-                if (payDay == currMonth.get(Calendar.DAY_OF_MONTH))
-                    return true;
-            }
-        }
-        return false;
+        return out;
     }
 }
