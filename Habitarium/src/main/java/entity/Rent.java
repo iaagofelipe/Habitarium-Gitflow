@@ -40,6 +40,21 @@ public class Rent {
     @ElementCollection
     private Map<Date, Float> DatePaidAndValue;
 
+    public Rent() {
+    }
+
+    public Rent(Long id, Property property, Lessor lessor, Date entranceDate, Date exitDate, Date readjustmentDate,
+                float value, int payDay) {
+        this.id = id;
+        this.property = property;
+        this.lessor = lessor;
+        this.entranceDate = entranceDate;
+        this.exitDate = exitDate;
+        this.readjustmentDate = readjustmentDate;
+        this.value = value;
+        this.payDay = payDay;
+    }
+
     public Long getId() {
         return id;
     }
