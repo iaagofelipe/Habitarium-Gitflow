@@ -11,8 +11,9 @@ import java.util.List;
 public class RentController {
     private Rent rent;
 
-    public RentController(Rent rent) {
-        this.rent = rent;
+    public Rent copyRent(Rent rent) {
+        return new Rent(rent.getId(), rent.getProperty(), rent.getLessor(), rent.getEntranceDate(), rent.getExitDate(),
+                rent.getReadjustmentDate(), rent.getValue(), rent.getPayDay());
     }
 
     public List<MonthPaid> setMonthsToPay() {
