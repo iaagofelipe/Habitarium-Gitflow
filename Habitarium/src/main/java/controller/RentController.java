@@ -3,41 +3,73 @@ package main.java.controller;
 import main.java.entity.MonthPaid;
 import main.java.entity.Rent;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.List;
+import java.util.*;
 
 public class RentController {
-    private Rent rent;
 
     public Rent copyRent(Rent rent) {
         return new Rent(rent.getId(), rent.getProperty(), rent.getLessor(), rent.getEntranceDate(), rent.getExitDate(),
                 rent.getReadjustmentDate(), rent.getValue(), rent.getPayDay());
     }
 
-    public List<MonthPaid> setMonthsToPay() {
+    public boolean hasChanged(Rent rent1, Rent rent2) {
+        boolean hasDatesChanged = rent1.getEntranceDate().compareTo(rent2.getEntranceDate()) != 0 ||
+                rent1.getExitDate().compareTo(rent2.getExitDate()) != 0;
+        boolean hasPaydayChanged = rent1.getPayDay() != rent2.getPayDay();
+        boolean hasValueChanged = rent1.getValue() != rent2.getValue();
+        boolean hasReadjustmentChanged = rent1.getReadjustmentDate().compareTo(rent2.getReadjustmentDate()) != 0;
+
+        return hasDatesChanged || hasPaydayChanged || hasValueChanged || hasReadjustmentChanged;
+    }
+
+    public List<String> compare(Rent rent1, Rent rent2) {
+        List<String> attrChanged = new ArrayList<>();
+        if (rent1.getEntranceDate().compareTo(rent2.getEntranceDate()) != 0) {
+            attrChanged.add("entranceDate");
+        }
+        if (rent1.getExitDate().compareTo(rent2.getExitDate()) != 0) {
+            attrChanged.add("exitDate");
+        }
+        if (rent1.getReadjustmentDate().compareTo(rent2.getReadjustmentDate()) != 0) {
+            attrChanged.add("readjustmentDate");
+        }
+        if (rent1.getPayDay() != rent2.getPayDay()) {
+            attrChanged.add("payDay");
+        }
+        if (rent1.getValue() != rent2.getValue()) {
+            attrChanged.add("value");
+        }
+        return attrChanged;
+    }
+
+    public List<MonthPaid> setMonthsToPay(Rent rent) {
         if (rent.getEntranceDate() == null || rent.getExitDate() == null) {
             throw new NullPointerException("Rent object has no entranceDate or exitDate attribute set!");
         }
 
-        List<MonthPaid> toPay = new ArrayList<>();
+        return initMonthPaidList(rent.getValue(), rent.getPayDay(), rent.getEntranceDate(), rent.getExitDate(), rent);
+    }
 
+    public List<MonthPaid> initMonthPaidList(float value, int day, Date start, Date end, Rent rent) {
+        List<MonthPaid> monthsToBePaid = new ArrayList<>();
         Calendar entranceDate = Calendar.getInstance();
         Calendar exitDate = Calendar.getInstance();
 
-        entranceDate.setTime(rent.getEntranceDate());
-        exitDate.setTime(rent.getExitDate());
+        entranceDate.setTime(start);
+        exitDate.setTime(end);
 
         while (entranceDate.before(exitDate)) {
-            int payDay = rent.getPayDay();
             int month = entranceDate.get(Calendar.MONTH);
             int year = entranceDate.get(Calendar.YEAR);
 
-            GregorianCalendar date = new GregorianCalendar(year, month - 1, payDay);
-            toPay.add(new MonthPaid(date.getTime(), rent.getValue(), false, rent));
+            GregorianCalendar date = new GregorianCalendar(year, month, day);
+            monthsToBePaid.add(new MonthPaid(date.getTime(), value, false, rent));
             entranceDate.add(Calendar.MONTH, 1);
         }
-        return toPay;
+        // Hack-ish the while loop not include exitDate, so we have to add manually
+        GregorianCalendar date = new GregorianCalendar(entranceDate.get(Calendar.YEAR),
+                entranceDate.get(Calendar.MONTH), day);
+        monthsToBePaid.add(new MonthPaid(date.getTime(), value, false, rent));
+        return monthsToBePaid;
     }
 }
