@@ -7,6 +7,11 @@ import java.util.*;
 
 public class RentController {
 
+    public Rent copyRent(Rent rent) {
+        return new Rent(rent.getId(), rent.getProperty(), rent.getLessor(), rent.getEntranceDate(), rent.getExitDate(),
+                rent.getReadjustmentDate(), rent.getValue(), rent.getPayDay());
+    }
+
     public boolean hasChanged(Rent rent1, Rent rent2) {
         boolean hasDatesChanged = rent1.getEntranceDate().compareTo(rent2.getEntranceDate()) != 0 ||
                 rent1.getExitDate().compareTo(rent2.getExitDate()) != 0;
