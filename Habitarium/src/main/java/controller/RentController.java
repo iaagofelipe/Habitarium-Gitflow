@@ -12,7 +12,7 @@ public class RentController {
                 rent.getReadjustmentDate(), rent.getValue(), rent.getPayDay());
     }
 
-    public boolean hasChanged(Rent rent1, Rent rent2) {
+    public boolean hasChangedDatesOrValue(Rent rent1, Rent rent2) {
         boolean hasDatesChanged = rent1.getEntranceDate().compareTo(rent2.getEntranceDate()) != 0 ||
                 rent1.getExitDate().compareTo(rent2.getExitDate()) != 0;
         boolean hasPaydayChanged = rent1.getPayDay() != rent2.getPayDay();
