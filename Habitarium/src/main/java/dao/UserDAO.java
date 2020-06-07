@@ -1,6 +1,7 @@
 package main.java.dao;
 
 import main.java.connection.ConnectionFactory;
+import main.java.entity.Rent;
 import main.java.entity.User;
 
 import javax.persistence.EntityManager;
@@ -11,21 +12,16 @@ public class UserDAO implements DAO<User> {
 
     @Override
     public User save(User user) {
-        User userLocal = findByLogin(user.getLogin());
-        if (userLocal != null) {
-            try {
-                this.entityManager.getTransaction().begin();
-                this.entityManager.persist(user);
-                this.entityManager.getTransaction().commit();
-            } catch (Exception error) {
-                this.entityManager.getTransaction().rollback();
-            } finally {
-                this.entityManager.close();
-            }
-            return user;
-        } else {
-            return null;
+        try {
+            this.entityManager.getTransaction().begin();
+            this.entityManager.persist(user);
+            this.entityManager.getTransaction().commit();
+        } catch (Exception error) {
+            this.entityManager.getTransaction().rollback();
+        } finally {
+            this.entityManager.close();
         }
+        return user;
     }
 
     @Override
@@ -35,26 +31,21 @@ public class UserDAO implements DAO<User> {
 
     @Override
     public User update(User user) {
-        User userLocal = findByLogin(user.getLogin());
-        if (userLocal != null) {
-            User userUp = null;
-            try {
-                this.entityManager.getTransaction().begin();
-                if (user.getId() == null) {
-                    this.entityManager.persist(user);
-                } else {
-                    userUp = this.entityManager.merge(user);
-                }
-                this.entityManager.getTransaction().commit();
-            } catch (Exception exception) {
-                this.entityManager.getTransaction().rollback();
-            } finally {
-                this.entityManager.close();
+        User userUp = null;
+        try {
+            this.entityManager.getTransaction().begin();
+            if (user.getId() == null) {
+                this.entityManager.persist(user);
+            } else {
+                userUp = this.entityManager.merge(user);
             }
-            return userUp;
-        } else {
-            return null;
+            this.entityManager.getTransaction().commit();
+        } catch (Exception exception) {
+            this.entityManager.getTransaction().rollback();
+        } finally {
+            this.entityManager.close();
         }
+        return userUp;
     }
 
     @Override
