@@ -22,7 +22,7 @@ public class RentController {
         return hasDatesChanged || hasPaydayChanged || hasValueChanged || hasReadjustmentChanged;
     }
 
-    public List<String> compare(Rent rent1, Rent rent2) {
+    public List<String> compareAndReturnListDiferences(Rent rent1, Rent rent2) {
         List<String> attrChanged = new ArrayList<>();
         if (rent1.getEntranceDate().compareTo(rent2.getEntranceDate()) != 0) {
             attrChanged.add("entranceDate");
