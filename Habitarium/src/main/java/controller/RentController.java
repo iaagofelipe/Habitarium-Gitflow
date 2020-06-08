@@ -46,8 +46,22 @@ public class RentController {
         if (rent.getEntranceDate() == null || rent.getExitDate() == null) {
             throw new NullPointerException("Rent object has no entranceDate or exitDate attribute set!");
         }
+        List<MonthPaid> oldMonthPaidList;
+        List<MonthPaid> monthPaidList = initMonthPaidList(rent.getValue(), rent.getPayDay(), rent.getEntranceDate(),
+                rent.getExitDate(), rent);
 
-        return initMonthPaidList(rent.getValue(), rent.getPayDay(), rent.getEntranceDate(), rent.getExitDate(), rent);
+        if (rent.getMonthPaidList() != null) {
+            oldMonthPaidList = rent.getMonthPaidList();
+
+            int size = Math.min(oldMonthPaidList.size(), monthPaidList.size());
+
+            for (int i = 0; i < size; i++) {
+                if (oldMonthPaidList.get(i).getDate().compareTo(monthPaidList.get(i).getDate()) == 0)
+                    monthPaidList.get(i).setPaid(oldMonthPaidList.get(i).isPaid());
+            }
+        }
+
+        return monthPaidList;
     }
 
     public List<MonthPaid> initMonthPaidList(float value, int day, Date start, Date end, Rent rent) {
