@@ -79,4 +79,24 @@ public class MonthPaidDAO implements DAO<MonthPaid> {
         }
         return monthPaid;
     }
+
+    public void deleteAll(List<Long> ids) {
+        // Write all pending changes to the DB and clear persistence context
+//        entityManager.flush();
+//        entityManager.clear();
+
+        try {
+            entityManager.getTransaction().begin();
+
+            Query query = entityManager.createQuery("DELETE MonthPaid mp WHERE id IN (:ids)");
+            query.setParameter("ids", ids);
+            query.executeUpdate();
+
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            entityManager.getTransaction().rollback();
+        } finally {
+            entityManager.close();
+        }
+    }
 }
