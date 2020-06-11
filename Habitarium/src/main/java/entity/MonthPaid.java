@@ -72,4 +72,9 @@ public class MonthPaid {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         return rent.getLessor().getName() + "  Data: " + format.format(date) + "  Valor: R$" + value;
     }
+
+    public String dateString() {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        return format.format(date);
+    }
 }
