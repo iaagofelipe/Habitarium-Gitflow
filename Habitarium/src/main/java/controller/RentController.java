@@ -22,7 +22,7 @@ public class RentController {
         return hasDatesChanged || hasPaydayChanged || hasValueChanged || hasReadjustmentChanged;
     }
 
-    public List<String> compareAndReturnListDiferences(Rent rent1, Rent rent2) {
+    public List<String> compareAndReturnListDifferences(Rent rent1, Rent rent2) {
         List<String> attrChanged = new ArrayList<>();
         if (rent1.getEntranceDate().compareTo(rent2.getEntranceDate()) != 0) {
             attrChanged.add("entranceDate");
@@ -46,18 +46,18 @@ public class RentController {
         if (rent.getEntranceDate() == null || rent.getExitDate() == null) {
             throw new NullPointerException("Rent object has no entranceDate or exitDate attribute set!");
         }
-        List<MonthPaid> oldMonthPaidList;
+        List<MonthPaid> oldMonthPaidList = rent.getMonthPaidList();
         List<MonthPaid> monthPaidList = initMonthPaidList(rent.getValue(), rent.getPayDay(), rent.getEntranceDate(),
                 rent.getExitDate(), rent);
 
-        if (rent.getMonthPaidList() != null) {
-            oldMonthPaidList = rent.getMonthPaidList();
-
+        if (oldMonthPaidList != null) {
             int size = Math.min(oldMonthPaidList.size(), monthPaidList.size());
 
             for (int i = 0; i < size; i++) {
-                if (oldMonthPaidList.get(i).getDate().compareTo(monthPaidList.get(i).getDate()) == 0)
-                    monthPaidList.get(i).setPaid(oldMonthPaidList.get(i).isPaid());
+                if (oldMonthPaidList.contains(monthPaidList.get(i))) {
+                    int index = oldMonthPaidList.indexOf(monthPaidList.get(i));
+                    monthPaidList.get(i).setPaid(oldMonthPaidList.get(index).isPaid());
+                }
             }
         }
 
