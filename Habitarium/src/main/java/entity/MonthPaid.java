@@ -2,7 +2,9 @@ package main.java.entity;
 
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
 @Table(name = "monthPaid")
@@ -71,6 +73,21 @@ public class MonthPaid {
     public String toString() {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         return rent.getLessor().getName() + "  Data: " + format.format(date) + "  Valor: R$" + value;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        MonthPaid monthPaid = (MonthPaid) o;
+        Calendar thisDate = Calendar.getInstance();
+        Calendar monthPaidDate = Calendar.getInstance();
+        thisDate.setTime(date);
+        monthPaidDate.setTime(monthPaid.getDate());
+
+        return thisDate.get(Calendar.MONTH) == monthPaidDate.get(Calendar.MONTH)
+                && thisDate.get(Calendar.YEAR) == monthPaidDate.get(Calendar.YEAR);
     }
 
     public String dateString() {
