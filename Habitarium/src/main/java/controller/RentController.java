@@ -3,7 +3,12 @@ package main.java.controller;
 import main.java.entity.MonthPaid;
 import main.java.entity.Rent;
 
-import java.util.*;
+import java.time.LocalDate;
+import java.time.YearMonth;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class RentController {
 
@@ -66,24 +71,18 @@ public class RentController {
 
     public List<MonthPaid> initMonthPaidList(float value, int day, Date start, Date end, Rent rent) {
         List<MonthPaid> monthsToBePaid = new ArrayList<>();
-        Calendar entranceDate = Calendar.getInstance();
-        Calendar exitDate = Calendar.getInstance();
+        YearMonth entranceDate = YearMonth.from(start.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+        YearMonth exitDate = YearMonth.from(end.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
 
-        entranceDate.setTime(start);
-        exitDate.setTime(end);
+        while (entranceDate.isBefore(exitDate.plusMonths(1L))) {
+            int month = entranceDate.getMonthValue();
+            int year = entranceDate.getYear();
 
-        while (entranceDate.before(exitDate)) {
-            int month = entranceDate.get(Calendar.MONTH);
-            int year = entranceDate.get(Calendar.YEAR);
-
-            GregorianCalendar date = new GregorianCalendar(year, month, day);
-            monthsToBePaid.add(new MonthPaid(date.getTime(), value, false, rent));
-            entranceDate.add(Calendar.MONTH, 1);
+            Date date = Date.from(LocalDate.of(year, month, day)
+                    .atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+            monthsToBePaid.add(new MonthPaid(date, value, false, rent));
+            entranceDate = entranceDate.plusMonths(1L);
         }
-        // Hack-ish the while loop not include exitDate, so we have to add manually
-        GregorianCalendar date = new GregorianCalendar(entranceDate.get(Calendar.YEAR),
-                entranceDate.get(Calendar.MONTH), day);
-        monthsToBePaid.add(new MonthPaid(date.getTime(), value, false, rent));
         return monthsToBePaid;
     }
 }
