@@ -26,6 +26,6 @@ have one or more properties and need to set an entry and exit date, readjustment
 - [SceneBuilder](https://gluonhq.com/) - Criador de telas
 
 # Versão
-> v1.0
+> v1.0.0
 
 # Licença
