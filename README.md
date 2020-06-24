@@ -6,6 +6,8 @@ tenha um ou vários imóveis e precise marcar data de entrada e saída, reajuste
 **_HABITARIUM_ is a project developed in JAVA that aims to demystify property management. Fits anyone who
 have one or more properties and need to set an entry and exit date, readjustments in the rent, register the tenant, etc.**
 
+## [Habitarium Frontend](https://github.com/iaagofelipe/HabitariumFront)
+
 ### Pré-requisitos :ballot_box_with_check:
 > Java 8 ou superior
 
@@ -21,7 +23,7 @@ have one or more properties and need to set an entry and exit date, readjustment
 6. Resolução de bugs e melhorias no projeto
 7. Lançamos a _versão 1.0_
 
-### Construído com :link:
+### Construído com
 - [Maven](https://maven.apache.org/) - Organizador de dependências
 - [Java](https://www.oracle.com/technetwork/pt/java/javase/downloads/index.html) - Versão 8 ou superior
 - [JavaFX](https://www.oracle.com/java/technologies/javase/javafx-overview.html) - Biblioteca de criação de telas
