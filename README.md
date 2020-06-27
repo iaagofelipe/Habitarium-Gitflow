@@ -34,3 +34,4 @@ have one or more properties and need to set an entry and exit date, readjustment
 > v1.0.0
 
 ### Licença 
+> Apache License V2.0
