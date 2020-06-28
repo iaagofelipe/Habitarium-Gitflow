@@ -27,26 +27,6 @@ public class RentController {
         return hasDatesChanged || hasPaydayChanged || hasValueChanged || hasReadjustmentChanged;
     }
 
-    public List<String> compareAndReturnListDifferences(Rent rent1, Rent rent2) {
-        List<String> attrChanged = new ArrayList<>();
-        if (rent1.getEntranceDate().compareTo(rent2.getEntranceDate()) != 0) {
-            attrChanged.add("entranceDate");
-        }
-        if (rent1.getExitDate().compareTo(rent2.getExitDate()) != 0) {
-            attrChanged.add("exitDate");
-        }
-        if (rent1.getReadjustmentDate().compareTo(rent2.getReadjustmentDate()) != 0) {
-            attrChanged.add("readjustmentDate");
-        }
-        if (rent1.getPayDay() != rent2.getPayDay()) {
-            attrChanged.add("payDay");
-        }
-        if (rent1.getValue() != rent2.getValue()) {
-            attrChanged.add("value");
-        }
-        return attrChanged;
-    }
-
     public List<MonthPaid> setMonthsToPay(Rent rent) {
         if (rent.getEntranceDate() == null || rent.getExitDate() == null) {
             throw new NullPointerException("Rent object has no entranceDate or exitDate attribute set!");

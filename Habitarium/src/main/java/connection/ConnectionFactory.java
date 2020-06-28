@@ -9,5 +9,4 @@ public class ConnectionFactory {
     public EntityManager getConnection() {
         return factory.createEntityManager();
     }
-
 }
