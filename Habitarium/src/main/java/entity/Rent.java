@@ -35,10 +35,6 @@ public class Rent {
 
     private float value;
     private int payDay;
-    private int amountPaidMonth = 0;
-
-    @ElementCollection
-    private Map<Date, Float> DatePaidAndValue;
 
     public Rent() {
     }
@@ -117,22 +113,6 @@ public class Rent {
 
     public void setLessor(Lessor lessor) {
         this.lessor = lessor;
-    }
-
-    public Map<Date, Float> getDatePaidAndValue() {
-        return DatePaidAndValue;
-    }
-
-    public void setDatePaidAndValue(Map<Date, Float> datePaidAndValue) {
-        DatePaidAndValue = datePaidAndValue;
-    }
-
-    public int getAmountPaidMonth() {
-        return amountPaidMonth;
-    }
-
-    public void setAmountPaidMonth(int amountPaidMonth) {
-        this.amountPaidMonth = amountPaidMonth;
     }
 
     public List<MonthPaid> getMonthPaidList() {
