@@ -1,46 +1,42 @@
-package main.java.dao;
+package com.habitarium.dao;
 
-import main.java.connection.ConnectionFactory;
-import main.java.entity.Lessor;
+import com.habitarium.connection.ConnectionFactory;
+import com.habitarium.entity.User;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import java.util.List;
 
-public class LessorDAO implements DAO<Lessor> {
-
+public class UserDAO implements DAO<User> {
     private EntityManager entityManager = new ConnectionFactory().getConnection();
 
-
     @Override
-    public Lessor save(Lessor lessor) {
+    public User save(User user) {
         try {
             this.entityManager.getTransaction().begin();
-            this.entityManager.persist(lessor);
+            this.entityManager.persist(user);
             this.entityManager.getTransaction().commit();
         } catch (Exception error) {
             this.entityManager.getTransaction().rollback();
         } finally {
             this.entityManager.close();
         }
-        return lessor;
+        return user;
     }
 
     @Override
-    public List<Lessor> getList() {
-        Query query = this.entityManager.createQuery("SELECT l FROM Lessor as l");
-        return query.getResultList();
+    public List getList() {
+        return null;
     }
 
     @Override
-    public Lessor update(Lessor lessor) {
-        Lessor lessorUp = null;
+    public User update(User user) {
+        User userUp = null;
         try {
             this.entityManager.getTransaction().begin();
-            if (lessor.getId() == null) {
-                this.entityManager.persist(lessor);
+            if (user.getId() == null) {
+                this.entityManager.persist(user);
             } else {
-                lessorUp = this.entityManager.merge(lessor);
+                userUp = this.entityManager.merge(user);
             }
             this.entityManager.getTransaction().commit();
         } catch (Exception exception) {
@@ -48,39 +44,42 @@ public class LessorDAO implements DAO<Lessor> {
         } finally {
             this.entityManager.close();
         }
-        return lessorUp;
+        return userUp;
     }
 
     @Override
-    public Lessor delete(Long id) {
-        Lessor lessor = null;
+    public User delete(Long id) {
+        User user = null;
         try {
-            lessor = entityManager.find(Lessor.class, id);
-            if(lessor.getRent() == null){
+            user = entityManager.find(User.class, id);
+            if (user != null) {
                 this.entityManager.getTransaction().begin();
-                this.entityManager.remove(lessor);
+                this.entityManager.remove(user);
                 this.entityManager.getTransaction().commit();
-            } else {
-                // TODO: Throw exception here!!
-                System.out.println("Nao eh possivel apagar um locatario vinculado a um aliguel");
             }
-
         } catch (Exception exception) {
             this.entityManager.getTransaction().rollback();
         } finally {
             this.entityManager.close();
         }
-        return lessor;
+        return user;
     }
 
     @Override
-    public Lessor findById(Long id) {
-        Lessor lessor = null;
+    public User findById(Long id) {
+        User user = null;
         try {
-            lessor = entityManager.find(Lessor.class, id);
+            user = entityManager.find(User.class, id);
         } catch (Exception e) {
             System.out.println("erro ao buscar por id\n" + e);
         }
-        return lessor;
+        return user;
+    }
+
+    public User findByLogin(String login) {
+        User user = null;
+        user = (User) this.entityManager.createQuery("SELECT u FROM User u WHERE u.login LIKE ?1").
+                setParameter(1, login).getSingleResult();
+        return user;
     }
 }

@@ -1,4 +1,4 @@
-package main.java.dataUtils;
+package com.habitarium.dataUtils;
 
 import java.util.Calendar;
 import java.util.Date;

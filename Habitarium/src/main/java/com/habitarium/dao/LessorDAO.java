@@ -1,43 +1,47 @@
-package main.java.dao;
+package com.habitarium.dao;
 
-import main.java.connection.ConnectionFactory;
-import main.java.entity.Rent;
-import main.java.entity.User;
+
+import com.habitarium.connection.ConnectionFactory;
+import com.habitarium.entity.Lessor;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.util.List;
 
-public class UserDAO implements DAO<User> {
+public class LessorDAO implements DAO<Lessor> {
+
     private EntityManager entityManager = new ConnectionFactory().getConnection();
 
+
     @Override
-    public User save(User user) {
+    public Lessor save(Lessor lessor) {
         try {
             this.entityManager.getTransaction().begin();
-            this.entityManager.persist(user);
+            this.entityManager.persist(lessor);
             this.entityManager.getTransaction().commit();
         } catch (Exception error) {
             this.entityManager.getTransaction().rollback();
         } finally {
             this.entityManager.close();
         }
-        return user;
+        return lessor;
     }
 
     @Override
-    public List getList() {
-        return null;
+    public List<Lessor> getList() {
+        Query query = this.entityManager.createQuery("SELECT l FROM Lessor as l");
+        return query.getResultList();
     }
 
     @Override
-    public User update(User user) {
-        User userUp = null;
+    public Lessor update(Lessor lessor) {
+        Lessor lessorUp = null;
         try {
             this.entityManager.getTransaction().begin();
-            if (user.getId() == null) {
-                this.entityManager.persist(user);
+            if (lessor.getId() == null) {
+                this.entityManager.persist(lessor);
             } else {
-                userUp = this.entityManager.merge(user);
+                lessorUp = this.entityManager.merge(lessor);
             }
             this.entityManager.getTransaction().commit();
         } catch (Exception exception) {
@@ -45,42 +49,39 @@ public class UserDAO implements DAO<User> {
         } finally {
             this.entityManager.close();
         }
-        return userUp;
+        return lessorUp;
     }
 
     @Override
-    public User delete(Long id) {
-        User user = null;
+    public Lessor delete(Long id) {
+        Lessor lessor = null;
         try {
-            user = entityManager.find(User.class, id);
-            if (user != null) {
+            lessor = entityManager.find(Lessor.class, id);
+            if(lessor.getRent() == null){
                 this.entityManager.getTransaction().begin();
-                this.entityManager.remove(user);
+                this.entityManager.remove(lessor);
                 this.entityManager.getTransaction().commit();
+            } else {
+                // TODO: Throw exception here!!
+                System.out.println("Nao eh possivel apagar um locatario vinculado a um aliguel");
             }
+
         } catch (Exception exception) {
             this.entityManager.getTransaction().rollback();
         } finally {
             this.entityManager.close();
         }
-        return user;
+        return lessor;
     }
 
     @Override
-    public User findById(Long id) {
-        User user = null;
+    public Lessor findById(Long id) {
+        Lessor lessor = null;
         try {
-            user = entityManager.find(User.class, id);
+            lessor = entityManager.find(Lessor.class, id);
         } catch (Exception e) {
             System.out.println("erro ao buscar por id\n" + e);
         }
-        return user;
-    }
-
-    public User findByLogin(String login) {
-        User user = null;
-        user = (User) this.entityManager.createQuery("SELECT u FROM User u WHERE u.login LIKE ?1").
-                setParameter(1, login).getSingleResult();
-        return user;
+        return lessor;
     }
 }

@@ -1,9 +1,7 @@
-package main.java.dao;
+package com.habitarium.dao;
 
-import main.java.connection.ConnectionFactory;
-import main.java.entity.MonthPaid;
-import main.java.entity.Property;
-import main.java.entity.Rent;
+import com.habitarium.connection.ConnectionFactory;
+import com.habitarium.entity.MonthPaid;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
